@@ -20,6 +20,8 @@ def main():
     df[['Ποσό']] = [x.replace(',', '.') for x in df['Ποσό']]
     df[['Ποσό']] = df[['Ποσό']].astype(float)
     df['Ημ/νία'] = pd.to_datetime(df['Ημ/νία'], format='%d/%m/%Y')
+    # df = df.sort_values('Α/Α', ascending=False)
+    df = df.sort_values('Ημ/νία')
     print(df.dtypes)
 
     df['Ποσό'] = df['Ποσό'].where(df['Πρόσημο ποσού'] == 'Π', other=-df['Ποσό'])
