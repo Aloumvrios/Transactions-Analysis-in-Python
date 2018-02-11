@@ -33,27 +33,43 @@ def main():
     df['cum_sum'] = df.Ποσό.cumsum()
     print(df)
 
-    df.plot(x='Ημ/νία', y='cum_sum', style='o')
-    plt.plot(df['Ημ/νία'], df['cum_sum'])
-    plt.show()
+    # df.plot(x='Ημ/νία', y='cum_sum', style='o')
+    # plt.plot(df['Ημ/νία'], df['cum_sum'])
+    # plt.show()
 
     # define cumsum column as target var in a new df
-#     target = pd.DataFrame(data=df['cum_sum'], columns=["cum_sum"])
-#     dep = df[['Α/Α', 'Ποσό']].copy()
-#     print("target:")
-#     print(target)
-#     print(dep)
-#     xi = dep
-#     y = target["cum_sum"]
+    target = pd.DataFrame(data=df['cum_sum'], columns=["cum_sum"])
+    dep = df['Α/Α']
+    print("target:")
+    print(target)
+    print(dep)
+    xi = dep
+    y = target["cum_sum"]
 
-#     lm = linear_model.LinearRegression()
-#     model = lm.fit(xi, y)
+    xi = xi.values.reshape(len(xi), 1)
+    y = y.values.reshape(len(y), 1)
+
+    # Plot outputs
+    plt.scatter(xi, y, color='black')
+    plt.title('Test Data')
+    plt.xlabel('Α/Α')
+    plt.ylabel('cumsum')
+    plt.xticks(())
+    plt.yticks(())
+
+     # plt.show()
+
+    lm = linear_model.LinearRegression()
+    # training
+    lm.fit(xi, y)
 
     # The lm.fit() function fits a linear model.
     # We  want to use the model to make predictions(that’s what we’re here for !), so we’ll use lm.predict():
 
-    # predictions = lm.predict(xi)
-    # print(predictions[0:5])
+    predictions = lm.predict(xi)
+    print(predictions[0:5])
+    plt.plot(xi, lm.predict(xi), color='red', linewidth=3)
+    plt.show()
 
 
 if __name__ == "__main__":
